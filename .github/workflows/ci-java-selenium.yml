@@ -1,0 +1,45 @@
+name: Selenium Java CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+        options: >-
+          --shm-size 2g
+          --health-cmd "curl -sS http://localhost:4444/wd/hub/status || exit 1"
+          --health-timeout 5s
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Build with Maven
+        run: |
+          mvn clean install
+
+      - name: Create screenshot directory
+        run: |
+          mkdir screenshot
+
+      - name: Run tests
+        env:
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+        run: |
+          mnv test
+          
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot
+          path: screenshot
