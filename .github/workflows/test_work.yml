@@ -1,0 +1,28 @@
+
+  name: Test
+  on: [push]
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: test
+          run: |
+            ls -a
+    test:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: test
+          run: |
+            ls -a
+    deploy:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - name: test
+          run: |
+            ls -a
+        - name: run tests
+          run: |
+            npm test
+          if: github.ref == 'refs/heads/main'
