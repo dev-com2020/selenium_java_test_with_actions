@@ -1,11 +1,10 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -14,33 +13,28 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DemoStoreTest {
 
     private WebDriver driver;
 
-    @Before
+    @BeforeEach
     public void setUp() throws MalformedURLException {
-        try {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless");
-            options.addArguments("-no-sandbox");
-            options.addArguments("--disabel-dev-shm-usage");
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
     }
 
-    @org.junit.Test
     @Test
     public void testDemo(){
         driver.get("https://www.google.com");
+
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         if (driver != null) {
             takeScreenshot();
@@ -52,8 +46,7 @@ public class DemoStoreTest {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             Files.createDirectories(Paths.get("screenshots"));
-            Files.copy(screenshot.toPath(),Paths.get("screenshots", "screenshot.png"));
-
+            Files.copy(screenshot.toPath(), Paths.get("screenshots", "screenshot.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
