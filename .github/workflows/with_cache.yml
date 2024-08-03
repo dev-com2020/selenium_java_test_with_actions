@@ -13,7 +13,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/app/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('/app/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Use Node.js 14
@@ -29,6 +29,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('/app/package-lock.json') }}
 
 
