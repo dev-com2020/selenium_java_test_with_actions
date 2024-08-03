@@ -7,9 +7,12 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,13 +22,13 @@ public class DemoStoreTest {
     private WebDriver driver;
 
     @Before
-    public void setUp(){
+    public void setUp() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("-no-sandbox");
         options.addArguments("--disabel-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
     }
 
     @Test
