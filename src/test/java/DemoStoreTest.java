@@ -14,6 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DemoStoreTest {
 
@@ -44,9 +46,11 @@ public class DemoStoreTest {
 
     private void takeScreenshot() {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String screenshotName = "screenshot_" + timestamp + ".png";
         try {
             Files.createDirectories(Paths.get("screenshots"));
-            Files.copy(screenshot.toPath(), Paths.get("screenshots", "screenshot.png"));
+            Files.copy(screenshot.toPath(), Paths.get("screenshots", screenshotName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
