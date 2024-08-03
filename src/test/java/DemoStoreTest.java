@@ -34,6 +34,7 @@ public class DemoStoreTest {
         }
     }
 
+    @org.junit.Test
     @Test
     public void testDemo(){
         driver.get("https://www.google.com");
