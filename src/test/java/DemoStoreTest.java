@@ -23,12 +23,15 @@ public class DemoStoreTest {
 
     @Before
     public void setUp() throws MalformedURLException {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("-no-sandbox");
-        options.addArguments("--disabel-dev-shm-usage");
-        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        try {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            options.addArguments("-no-sandbox");
+            options.addArguments("--disabel-dev-shm-usage");
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
