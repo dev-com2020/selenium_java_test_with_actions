@@ -34,7 +34,7 @@ public class DemoStoreTest {
     }
 
     @After
-    public void teadDown(){
+    public void tearDown(){
         if (driver != null) {
             takeScreenshot();
             driver.quit();
